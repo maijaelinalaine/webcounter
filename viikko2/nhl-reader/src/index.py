@@ -1,12 +1,12 @@
-from player import PlayerReader, PlayerStats
 from rich.console import Console
 from rich.table import Table
 from rich.text import Text
+from player import PlayerReader, PlayerStats
 
 def create_nationality_table(players, nationality, season="2024-25"):
     """Create a rich table for a specific nationality"""
     console = Console()
-    
+
     header = Text()
     header.append("Nationality [", style="white")
     header.append(f"{nationality}", style="cyan bold")
@@ -25,7 +25,7 @@ def create_nationality_table(players, nationality, season="2024-25"):
     table.add_column("goals", justify="right", style="magenta", no_wrap=False, width=10)
     table.add_column("assists", justify="right", style="magenta", no_wrap=False, width=10)
     table.add_column("points", justify="right", style="magenta", no_wrap=False, width=10)
-    
+
     for player in players:
         table.add_row(
             player.name,
@@ -34,7 +34,7 @@ def create_nationality_table(players, nationality, season="2024-25"):
             str(player.assists),
             str(player.points)
         )
-    
+
     console.print(table)
     console.print()
 
@@ -46,13 +46,13 @@ def main():
     url = f"https://studies.cs.helsinki.fi/nhlstats/{season}/players"
     reader = PlayerReader(url)
     stats = PlayerStats(reader)
-        
+
     players = stats.top_scorers_by_nationality(nationality)
-    
+
     if players:
         create_nationality_table(players, nationality, season)
     else:
         console.print(f"[yellow] No players from {nationality} in season {season}[/yellow]")
- 
+
 if __name__ == "__main__":
     main()

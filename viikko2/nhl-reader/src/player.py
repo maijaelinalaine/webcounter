@@ -14,15 +14,15 @@ class Player:
 
     def __str__(self):
         return f"{self.name:20} {self.goals} + {self.assists} = {self.points}"
-    
+
 class PlayerReader:
     def __init__(self, url):
-        response = requests.get(url).json()
+        response = requests.get(url, timeout=5).json()
         self.players = [Player(p) for p in response]
 
     def get_players(self):
         return self.players
-    
+
 class PlayerStats:
     def __init__(self, reader):
         self.players = reader.get_players()
@@ -31,4 +31,3 @@ class PlayerStats:
         filtered = [p for p in self.players if p.nationality == nationality]
         filtered.sort(key=lambda p: p.points, reverse=True)
         return filtered
-
