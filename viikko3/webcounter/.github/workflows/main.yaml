@@ -27,7 +27,9 @@ jobs:
         uses: nanasess/setup-chromedriver@master
 
       - name: Install dependencies
-        run: poetry install
+        run: |
+          poetry install
+          poetry add selenium --group dev
 
       - name: Run robot tests
         run: bash run_robot_tests.sh
