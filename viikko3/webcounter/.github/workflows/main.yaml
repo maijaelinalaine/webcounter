@@ -11,12 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+
       - name: Set up Python 3.12
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+
       - name: Install Poetry
         run: pip install poetry
+
       - name: Setup chromedriver
         uses: nanasess/setup-chromedriver@master
       - run: |
@@ -25,5 +28,12 @@ jobs:
 
       - name: Install dependencies
         run: poetry install
+
       - name: Run robot tests
         run: bash run_robot_tests.sh
+
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@latest
+
+      - name: Install ChromeDriver
+        uses: nanasess/setup-chromedriver@master
